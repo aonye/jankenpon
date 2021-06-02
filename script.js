@@ -73,7 +73,7 @@ function game(){
     let computerCount=0;
     while(count<5 && computerCount<5){
         let tempStr = playGame(playerSelection(), computerPlay());
-        console.log(tempStr);
+        alert(tempStr);
         let result = tempStr.indexOf("draw");
         if (result==-1){//if not a draw
             result = tempStr.indexOf("win");
@@ -91,11 +91,13 @@ function game(){
     console.log("Final Score: You: " + count + ", The Computer: " + computerCount + ".");
     if (count===5){
         console.log("You win! Great job.");
-        return "You win! Great job.";
+        alert("You win! Great job.");
+        //return "You win! Great job.";
     }
     else {
         console.log("You lost. Better try next time.");
-        return "You lost. Better try next time.";
+        alert("You win! Great job.");
+        //return "You lost. Better try next time.";
     }
 }
 
