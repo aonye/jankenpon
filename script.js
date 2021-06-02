@@ -41,6 +41,7 @@ function computerPlay() {
 function playGame(playerSelection, computerPlay){
 
     //console.log(playerSelection, computerPlay);
+    alert("Computer has selected: " + computerPlay + ".");
 
     if (playerSelection===computerPlay){ //check for draw 
         return "Computer has also selected " + playerSelection + ". This round is a draw.";
@@ -89,6 +90,7 @@ function game(){
         }
     }
     console.log("Final Score: You: " + count + ", The Computer: " + computerCount + ".");
+    alert("Final Score: You: " + count + ", The Computer: " + computerCount + ".");
     if (count===5){
         console.log("You win! Great job.");
         alert("You win! Great job.");
