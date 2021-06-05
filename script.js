@@ -41,7 +41,7 @@ function computerPlay() {
 function playGame(playerSelection, computerPlay){
 
     //console.log(playerSelection, computerPlay);
-    alert("Computer has selected: " + computerPlay + ".");
+    //alert("Computer has selected: " + computerPlay + ".");
 
     if (playerSelection===computerPlay){ //check for draw 
         return "Computer has also selected " + playerSelection + ". This round is a draw.";
