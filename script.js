@@ -1,7 +1,7 @@
 //prompt user to enter choice of either R, P or S using prompt.
-function playerSelection(){
+function playerSelection(selection){
 
-    let inputVal = window.prompt("Please enter Rock, Paper or Scissors: ", "e.g. rock (case insensitive)");
+    let inputVal = selection;
     let originalVal = inputVal;
 
     inputVal = inputVal.toLowerCase();
@@ -69,38 +69,82 @@ function playGame(playerSelection, computerPlay){
     }
 }
 
-function game(){
-    let count=0;
-    let computerCount=0;
-    while(count<5 && computerCount<5){
-        let tempStr = playGame(playerSelection(), computerPlay());
-        alert(tempStr);
-        let result = tempStr.indexOf("draw");
-        if (result==-1){//if not a draw
-            result = tempStr.indexOf("win");
-            if (result==-1){ //if not a win, increment computer
-                computerCount+=1;
-            }
-            else { //win for you
-                count+=1;
-            }
+function game(result){
+    let tempStr = result;
+    let match = tempStr.indexOf("draw");
+    if (match==-1){//if not a draw
+        match = tempStr.indexOf("win");
+        if (match==-1){ //if not a win, increment computer
+            computerCount+=1;
         }
-        else { //if it is a draw
-            continue;
+        else { //win for you
+            count+=1;
         }
     }
-    console.log("Final Score: You: " + count + ", The Computer: " + computerCount + ".");
-    alert("Final Score: You: " + count + ", The Computer: " + computerCount + ".");
-    if (count===5){
-        console.log("You win! Great job.");
-        alert("You win! Great job.");
-        //return "You win! Great job.";
+    console.log(count, computerCount);
+    if (firstRound) {
+        //check for first round
+        const container = document.querySelector('.container');
+        const div = document.createElement('div');
+        div.classList.add('resultdiv');
+        div.setAttribute('style', 'white-space: pre-line;');
+        div.textContent = result + '\n\n' + "Your score: " + count + ". " + 
+        "Computer score: " + computerCount + ".";
+        container.append(div);
+        firstRound = false;
+    }
+    if (count===5) {
+        result = "You win!"
+        displayResults(result);
+        makePlayAgainButton();
+    }
+    else if (computerCount===5){
+        result = "You lose. Better luck next time."
+        displayResults(result);
+        makePlayAgainButton();
     }
     else {
-        console.log("You lost. Better try next time.");
-        alert("You win! Great job.");
-        //return "You lost. Better try next time.";
+        displayResults(result);
     }
 }
 
-game();
+const buttons = document.querySelectorAll('button');
+let count = 0;
+let computerCount = 0;
+let firstRound = true;
+
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        if (count===5 || computerCount ===5 ) {
+            alert("ERROR, game is over. Please refresh page or click play again");
+        }
+        else {
+            result = playGame(playerSelection(button.id), computerPlay());
+            game(result);
+        }
+    });
+});
+
+function makePlayAgainButton(){
+    const container = document.querySelector('.container');
+    const button = document.createElement('button');
+    button.textContent = "Play again";
+    button.addEventListener('click', () => { refreshPage() });
+
+    const div = document.createElement('div');
+    const lineBreak = document.createElement('br');
+    div.appendChild(lineBreak);
+    
+    container.append(div);
+    container.append(button);
+}
+
+function displayResults(result){
+    const resultDiv = document.querySelector('.resultdiv');
+    resultDiv.textContent = result + '\n\n' + "Your score: " + count + ". " + 
+    "Computer score: " + computerCount + ".";
+}
+
+function refreshPage(){
+    window.location.reload();
+} 
